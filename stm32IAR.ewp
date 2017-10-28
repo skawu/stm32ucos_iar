@@ -304,6 +304,8 @@
           <state>$PROJ_DIR$\user\</state>
           <state>$PROJ_DIR$\Driver\</state>
           <state>$PROJ_DIR$\Driver\led\</state>
+          <state>$PROJ_DIR$\uCOS-II\Source\</state>
+          <state>$PROJ_DIR$\uCOS-II\Ports\arm-cortex-m3\Generic\IAR\</state>
           <state>D:\IAR Systems\Embedded Workbench 7.0\arm\inc\c</state>
         </option>
         <option>
@@ -1987,6 +1989,51 @@
     </file>
     <file>
       <name>$PROJ_DIR$\FWLIB\src\stm32f10x_wwdg.c</name>
+    </file>
+  </group>
+  <group>
+    <name>ucosii_ports</name>
+    <file>
+      <name>$PROJ_DIR$\uCOS-II\Ports\arm-cortex-m3\Generic\IAR\os_cpu_a.asm</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\uCOS-II\Ports\arm-cortex-m3\Generic\IAR\os_cpu_c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\uCOS-II\Ports\arm-cortex-m3\Generic\IAR\os_dbg.c</name>
+    </file>
+  </group>
+  <group>
+    <name>ucosii_source</name>
+    <file>
+      <name>$PROJ_DIR$\uCOS-II\Source\os_core.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\uCOS-II\Source\os_flag.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\uCOS-II\Source\os_mbox.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\uCOS-II\Source\os_mem.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\uCOS-II\Source\os_mutex.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\uCOS-II\Source\os_q.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\uCOS-II\Source\os_sem.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\uCOS-II\Source\os_task.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\uCOS-II\Source\os_time.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\uCOS-II\Source\os_tmr.c</name>
     </file>
   </group>
   <group>
