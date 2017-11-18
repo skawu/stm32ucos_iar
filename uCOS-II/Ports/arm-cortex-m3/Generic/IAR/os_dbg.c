@@ -122,50 +122,50 @@ OS_COMPILER_OPT  INT16U  const  OSVersionNbr       = OS_VERSION;
 
 OS_COMPILER_OPT  INT16U  const  OSDataSize = sizeof(OSCtxSwCtr)
 #if (OS_EVENT_EN > 0) && (OS_MAX_EVENTS > 0)
-                                           + sizeof(OSEventFreeList)
-                                           + sizeof(OSEventTbl)
+        + sizeof(OSEventFreeList)
+        + sizeof(OSEventTbl)
 #endif
 #if (OS_VERSION >= 251) && (OS_FLAG_EN > 0) && (OS_MAX_FLAGS > 0)
-                                           + sizeof(OSFlagTbl)
-                                           + sizeof(OSFlagFreeList)
+        + sizeof(OSFlagTbl)
+        + sizeof(OSFlagFreeList)
 #endif
 #if OS_TASK_STAT_EN > 0
-                                           + sizeof(OSCPUUsage)
-                                           + sizeof(OSIdleCtrMax)
-                                           + sizeof(OSIdleCtrRun)
-                                           + sizeof(OSStatRdy)
-                                           + sizeof(OSTaskStatStk)
+        + sizeof(OSCPUUsage)
+        + sizeof(OSIdleCtrMax)
+        + sizeof(OSIdleCtrRun)
+        + sizeof(OSStatRdy)
+        + sizeof(OSTaskStatStk)
 #endif
 #if OS_TICK_STEP_EN > 0
-                                           + sizeof(OSTickStepState)
+        + sizeof(OSTickStepState)
 #endif
 #if (OS_MEM_EN > 0) && (OS_MAX_MEM_PART > 0)
-                                           + sizeof(OSMemFreeList)
-                                           + sizeof(OSMemTbl)
+        + sizeof(OSMemFreeList)
+        + sizeof(OSMemTbl)
 #endif
 #if (OS_Q_EN > 0) && (OS_MAX_QS > 0)
-                                           + sizeof(OSQFreeList)
-                                           + sizeof(OSQTbl)
+        + sizeof(OSQFreeList)
+        + sizeof(OSQTbl)
 #endif
 #if OS_TIME_GET_SET_EN > 0
-                                           + sizeof(OSTime)
+        + sizeof(OSTime)
 #endif
-                                           + sizeof(OSIntNesting)
-                                           + sizeof(OSLockNesting)
-                                           + sizeof(OSPrioCur)
-                                           + sizeof(OSPrioHighRdy)
-                                           + sizeof(OSRdyGrp)
-                                           + sizeof(OSRdyTbl)
-                                           + sizeof(OSRunning)
-                                           + sizeof(OSTaskCtr)
-                                           + sizeof(OSIdleCtr)
-                                           + sizeof(OSTaskIdleStk)
-                                           + sizeof(OSTCBCur)
-                                           + sizeof(OSTCBFreeList)
-                                           + sizeof(OSTCBHighRdy)
-                                           + sizeof(OSTCBList)
-                                           + sizeof(OSTCBPrioTbl)
-                                           + sizeof(OSTCBTbl);
+        + sizeof(OSIntNesting)
+        + sizeof(OSLockNesting)
+        + sizeof(OSPrioCur)
+        + sizeof(OSPrioHighRdy)
+        + sizeof(OSRdyGrp)
+        + sizeof(OSRdyTbl)
+        + sizeof(OSRunning)
+        + sizeof(OSTaskCtr)
+        + sizeof(OSIdleCtr)
+        + sizeof(OSTaskIdleStk)
+        + sizeof(OSTCBCur)
+        + sizeof(OSTCBFreeList)
+        + sizeof(OSTCBHighRdy)
+        + sizeof(OSTCBList)
+        + sizeof(OSTCBPrioTbl)
+        + sizeof(OSTCBTbl);
 
 #endif
 
@@ -189,74 +189,54 @@ OS_COMPILER_OPT  INT16U  const  OSDataSize = sizeof(OSCtxSwCtr)
 */
 
 #if OS_VERSION >= 270 && OS_DEBUG_EN > 0
-void  OSDebugInit (void)
+void  OSDebugInit(void)
 {
-    void  *ptemp;
-
-
-    ptemp = (void *)&OSDebugEn;
-
-    ptemp = (void *)&OSEndiannessTest;
-
-    ptemp = (void *)&OSEventMax;
-    ptemp = (void *)&OSEventNameSize;
-    ptemp = (void *)&OSEventEn;
-    ptemp = (void *)&OSEventSize;
-    ptemp = (void *)&OSEventTblSize;
-
-    ptemp = (void *)&OSFlagEn;
-    ptemp = (void *)&OSFlagGrpSize;
-    ptemp = (void *)&OSFlagNodeSize;
-    ptemp = (void *)&OSFlagWidth;
-    ptemp = (void *)&OSFlagMax;
-    ptemp = (void *)&OSFlagNameSize;
-
-    ptemp = (void *)&OSLowestPrio;
-
-    ptemp = (void *)&OSMboxEn;
-
-    ptemp = (void *)&OSMemEn;
-    ptemp = (void *)&OSMemMax;
-    ptemp = (void *)&OSMemNameSize;
-    ptemp = (void *)&OSMemSize;
-    ptemp = (void *)&OSMemTblSize;
-
-    ptemp = (void *)&OSMutexEn;
-
-    ptemp = (void *)&OSPtrSize;
-
-    ptemp = (void *)&OSQEn;
-    ptemp = (void *)&OSQMax;
-    ptemp = (void *)&OSQSize;
-
-    ptemp = (void *)&OSRdyTblSize;
-
-    ptemp = (void *)&OSSemEn;
-
-    ptemp = (void *)&OSStkWidth;
-
-    ptemp = (void *)&OSTaskCreateEn;
-    ptemp = (void *)&OSTaskCreateExtEn;
-    ptemp = (void *)&OSTaskDelEn;
-    ptemp = (void *)&OSTaskIdleStkSize;
-    ptemp = (void *)&OSTaskProfileEn;
-    ptemp = (void *)&OSTaskMax;
-    ptemp = (void *)&OSTaskNameSize;
-    ptemp = (void *)&OSTaskStatEn;
-    ptemp = (void *)&OSTaskStatStkSize;
-    ptemp = (void *)&OSTaskStatStkChkEn;
-    ptemp = (void *)&OSTaskSwHookEn;
-
-    ptemp = (void *)&OSTCBPrioTblMax;
-    ptemp = (void *)&OSTCBSize;
-
-    ptemp = (void *)&OSTicksPerSec;
-    ptemp = (void *)&OSTimeTickHookEn;
-
-    ptemp = (void *)&OSVersionNbr;
-
-    ptemp = (void *)&OSDataSize;
-
-    ptemp = ptemp;                             /* Prevent compiler warning for 'ptemp' not being used! */
+	void  *ptemp;
+	ptemp = (void *)&OSDebugEn;
+	ptemp = (void *)&OSEndiannessTest;
+	ptemp = (void *)&OSEventMax;
+	ptemp = (void *)&OSEventNameSize;
+	ptemp = (void *)&OSEventEn;
+	ptemp = (void *)&OSEventSize;
+	ptemp = (void *)&OSEventTblSize;
+	ptemp = (void *)&OSFlagEn;
+	ptemp = (void *)&OSFlagGrpSize;
+	ptemp = (void *)&OSFlagNodeSize;
+	ptemp = (void *)&OSFlagWidth;
+	ptemp = (void *)&OSFlagMax;
+	ptemp = (void *)&OSFlagNameSize;
+	ptemp = (void *)&OSLowestPrio;
+	ptemp = (void *)&OSMboxEn;
+	ptemp = (void *)&OSMemEn;
+	ptemp = (void *)&OSMemMax;
+	ptemp = (void *)&OSMemNameSize;
+	ptemp = (void *)&OSMemSize;
+	ptemp = (void *)&OSMemTblSize;
+	ptemp = (void *)&OSMutexEn;
+	ptemp = (void *)&OSPtrSize;
+	ptemp = (void *)&OSQEn;
+	ptemp = (void *)&OSQMax;
+	ptemp = (void *)&OSQSize;
+	ptemp = (void *)&OSRdyTblSize;
+	ptemp = (void *)&OSSemEn;
+	ptemp = (void *)&OSStkWidth;
+	ptemp = (void *)&OSTaskCreateEn;
+	ptemp = (void *)&OSTaskCreateExtEn;
+	ptemp = (void *)&OSTaskDelEn;
+	ptemp = (void *)&OSTaskIdleStkSize;
+	ptemp = (void *)&OSTaskProfileEn;
+	ptemp = (void *)&OSTaskMax;
+	ptemp = (void *)&OSTaskNameSize;
+	ptemp = (void *)&OSTaskStatEn;
+	ptemp = (void *)&OSTaskStatStkSize;
+	ptemp = (void *)&OSTaskStatStkChkEn;
+	ptemp = (void *)&OSTaskSwHookEn;
+	ptemp = (void *)&OSTCBPrioTblMax;
+	ptemp = (void *)&OSTCBSize;
+	ptemp = (void *)&OSTicksPerSec;
+	ptemp = (void *)&OSTimeTickHookEn;
+	ptemp = (void *)&OSVersionNbr;
+	ptemp = (void *)&OSDataSize;
+	ptemp = ptemp;                             /* Prevent compiler warning for 'ptemp' not being used! */
 }
 #endif

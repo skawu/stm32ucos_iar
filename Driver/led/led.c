@@ -15,6 +15,12 @@ void LED_gpio_init(void)
 	GPIO_InitStruction.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_InitStruction.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOC, &GPIO_InitStruction);
+	/* ·äÃùÆ÷ PB5 */
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+	GPIO_InitStruction.GPIO_Pin = GPIO_Pin_5;
+	GPIO_InitStruction.GPIO_Mode = GPIO_Mode_Out_PP;
+	GPIO_InitStruction.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOB, &GPIO_InitStruction);
 }
 
 void LED_GPIO_set(unsigned char gpio_num, unsigned char value)
@@ -92,5 +98,17 @@ void LED_GPIO_set(unsigned char gpio_num, unsigned char value)
 				{ GPIO_ResetBits(GPIOC, GPIO_Pin_7); }
 			}
 			break;
+
+		case 8:
+			{
+				if (value)
+				{ GPIO_SetBits(GPIOB, GPIO_Pin_5); }
+				else
+				{ GPIO_ResetBits(GPIOB, GPIO_Pin_5); }
+			}
+			break;
 	}
 }
+
+
+
