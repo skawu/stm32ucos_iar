@@ -155,6 +155,14 @@ void SysTick_Handler(void)
 /**
   * @}
   */
+void uart2_IRQHandler(void)
+{
+    
+}
+void uart3_IRQHandler(void)
+{
+}
+
 
 
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

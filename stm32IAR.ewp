@@ -307,6 +307,9 @@
           <state>$PROJ_DIR$\uCOS-II\Source\</state>
           <state>$PROJ_DIR$\uCOS-II\Ports\arm-cortex-m3\Generic\IAR\</state>
           <state>D:\IAR Systems\Embedded Workbench 7.0\arm\inc\c</state>
+          <state>$PROJ_DIR$\common\</state>
+          <state>$PROJ_DIR$\Driver\uart\</state>
+          <state>$PROJ_DIR$\Driver\esp8266\</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1911,11 +1914,29 @@
     </group>
   </group>
   <group>
+    <name>common</name>
+    <file>
+      <name>$PROJ_DIR$\common\queue.c</name>
+    </file>
+  </group>
+  <group>
     <name>Driver</name>
+    <group>
+      <name>esp8266</name>
+      <file>
+        <name>$PROJ_DIR$\Driver\esp8266\esp8266.c</name>
+      </file>
+    </group>
     <group>
       <name>LED</name>
       <file>
         <name>$PROJ_DIR$\Driver\led\led.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$\Driver\uart\uart.c</name>
       </file>
     </group>
   </group>

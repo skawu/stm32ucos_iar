@@ -29,6 +29,7 @@ extern "C" {
 
 	/* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
+#include "queue.h"
 
 	/* Exported types ------------------------------------------------------------*/
 	/* Exported constants --------------------------------------------------------*/
@@ -42,8 +43,12 @@ extern "C" {
 	void UsageFault_Handler(void);
 	void SVC_Handler(void);
 	void DebugMon_Handler(void);
-	void PendSV_Handler(void);
-	void SysTick_Handler(void);
+//	void PendSV_Handler(void);
+	void OS_CPU_PendSVHandler(void);
+
+//	void SysTick_Handler(void);
+	void OS_CPU_SysTickHandler();
+
 
 #ifdef __cplusplus
 }
