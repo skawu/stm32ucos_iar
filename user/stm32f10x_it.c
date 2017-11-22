@@ -23,6 +23,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h"
+#include "esp8266.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
@@ -155,11 +156,24 @@ void SysTick_Handler(void)
 /**
   * @}
   */
-void uart2_IRQHandler(void)
+void USART2_IRQHandler(void)
 {
-    
+	u8 value;
+
+	if (USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)
+	{
+		value = (u8)USART_ReceiveData(USART2);
+		queue_put(uart2.uart_queue, value);
+		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
+	}
+
+	if (USART_GetITStatus(USART2, USART_IT_TC) != RESET)
+	{
+		/* clear interrupt */
+		USART_ClearITPendingBit(USART2, USART_IT_TC);
+	}
 }
-void uart3_IRQHandler(void)
+void USART3_IRQHandler(void)
 {
 }
 

@@ -13,6 +13,8 @@ typedef struct Uart
 	u16 pin_rx;
 	u32 pin_rcc;
 	u32 uart_rcc;
+	u8  IRQChannel;
+	u8 subPriority;
 	GPIO_TypeDef *gpiorx;
 	GPIO_TypeDef *gpiotx;
 	USART_TypeDef *uartx;
