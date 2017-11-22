@@ -64,3 +64,19 @@ void init_esp8266(void)
 	init_uart(&uart3);
 }
 
+void esp8266_handle(void)
+{
+	u8 temp = 0;
+
+	while (queue_is_empty(uart3.uart_queue) != 1)
+	{
+		temp = queue_get(uart3.uart_queue);
+		uart_send_char(&uart2, temp);
+	}
+
+	while (queue_is_empty(uart2.uart_queue) != 1)
+	{
+		temp = queue_get(uart2.uart_queue);
+		uart_send_char(&uart3, temp);
+	}
+}

@@ -13,5 +13,6 @@ extern uart_t uart3;
 
 
 void init_esp8266(void);
+void esp8266_handle(void);
 
 #endif

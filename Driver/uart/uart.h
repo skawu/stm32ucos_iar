@@ -22,6 +22,9 @@ typedef struct Uart
 } uart_t;
 
 void init_uart(uart_t *uart);
+void uart_send_char(uart_t *uart, u8 value);
+void uart_send_string(uart_t *uart, u8 *value);
+void uart_send_array(uart_t *uart, u8 *value, u16 length);
 
 
 #endif

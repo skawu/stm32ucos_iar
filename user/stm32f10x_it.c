@@ -166,15 +166,18 @@ void USART2_IRQHandler(void)
 		queue_put(uart2.uart_queue, value);
 		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
 	}
-
-	if (USART_GetITStatus(USART2, USART_IT_TC) != RESET)
-	{
-		/* clear interrupt */
-		USART_ClearITPendingBit(USART2, USART_IT_TC);
-	}
 }
+
 void USART3_IRQHandler(void)
 {
+	u8 value;
+
+	if (USART_GetITStatus(USART3, USART_IT_RXNE) != RESET)
+	{
+		value = (u8)USART_ReceiveData(USART3);
+		queue_put(uart3.uart_queue, value);
+		USART_ClearITPendingBit(USART3, USART_IT_RXNE);
+	}
 }
 
 
