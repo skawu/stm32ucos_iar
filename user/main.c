@@ -1,5 +1,6 @@
 #include "stm32f10x.h"
 #include <ucos_ii.h>
+#include <stdio.h>
 
 #include "led.h"
 #include "esp8266.h"
@@ -13,7 +14,7 @@ void delay(u32 i)
 }
 
 static OS_STK Task_led_STK[OS_TASK_LED_STK_SIZE];
-static OS_STK Task_led_STK2[OS_TASK_LED_STK_SIZE];
+//static OS_STK Task_led_STK2[OS_TASK_LED_STK_SIZE];
 static OS_STK Task_esp8266_STK[OS_TASK_STAT_STK_SIZE];
 
 

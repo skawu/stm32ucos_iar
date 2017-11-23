@@ -94,8 +94,8 @@ void USART_SendChar(USART_TypeDef *USARTx, u8 c)
 	while (USART_GetFlagStatus(USARTx, USART_FLAG_TXE) == RESET);
 }
 
-#if 0
-char putchar(char c)
+#if DEBUG_PRINTF
+int putchar(int c)
 {
 	USART_SendChar(USART3, c);
 	return c;
