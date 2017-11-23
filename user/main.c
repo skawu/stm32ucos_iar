@@ -4,6 +4,8 @@
 #include "led.h"
 #include "esp8266.h"
 
+char usart_data_main[] = "skawu\n";
+
 
 void delay(u32 i)
 {
@@ -24,6 +26,7 @@ void SySTick_init(void)
 /* 外设统一初始化 */
 void peri_init(void)
 {
+	SystemInit();
 	SySTick_init();     // 应该放在第一个任务while之前执行
 	LED_gpio_init();
 	init_esp8266();
@@ -64,6 +67,7 @@ void Task_esp8266(void *p_arg)
 	while (1)
 	{
 		esp8266_handle();
+//		USART_SendStr(USART3, usart_data_main);
 	}
 }
 
@@ -76,9 +80,9 @@ int main(void)
 {
 	OSInit();
 	peri_init();
-	OSTaskCreate(Task_led, (void *)0, &Task_led_STK[OS_TASK_LED_STK_SIZE- 1], 3);
-	OSTaskCreate(Task_buz, (void *)0, &Task_led_STK2[OS_TASK_LED_STK_SIZE - 1], 2);
-    OSTaskCreate(Task_esp8266, (void *)0, &Task_esp8266_STK[OS_TASK_STAT_STK_SIZE - 1], 4);
+	OSTaskCreate(Task_led, (void *)0, &Task_led_STK[OS_TASK_LED_STK_SIZE - 1], 3);
+//	OSTaskCreate(Task_buz, (void *)0, &Task_led_STK2[OS_TASK_LED_STK_SIZE - 1], 2);
+	OSTaskCreate(Task_esp8266, (void *)0, &Task_esp8266_STK[OS_TASK_STAT_STK_SIZE - 1], 4);
 	OSStart();
 	return 0;
 }

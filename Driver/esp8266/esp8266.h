@@ -7,10 +7,8 @@
 #include "uart.h"
 #include "queue.h"
 
-extern uart_t uart2;
-extern uart_t uart3;
-
-
+extern queue_t uart2_queue;
+extern queue_t uart3_queue;
 
 void init_esp8266(void);
 void esp8266_handle(void);

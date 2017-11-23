@@ -1,84 +1,115 @@
 #include "uart.h"
 #include <stdio.h>
 
-void init_uart(uart_t *uart)
+static void uart_gpio_init(USART_TypeDef *USARTx)
 {
-	GPIO_InitTypeDef GPIO_InitTypeStructure;
-	USART_InitTypeDef USART_InitTypeStructure;
-	NVIC_InitTypeDef    NVIC_InitTypeStructure;
-	/* gpio口初始化 */
-	RCC_APB2PeriphClockCmd(uart->pin_rcc, ENABLE);
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
-	GPIO_InitTypeStructure.GPIO_Pin = uart->pin_rx;
-	GPIO_InitTypeStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_InitTypeStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(uart->gpiorx, &GPIO_InitTypeStructure);
-	GPIO_InitTypeStructure.GPIO_Pin = uart->pin_tx;
-	GPIO_InitTypeStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	GPIO_Init(uart->gpiotx, &GPIO_InitTypeStructure);
-	/* 串口初始化 */
+	GPIO_InitTypeDef GPIO_InitStructure;
 
-	if (uart->uart_rcc == RCC_APB2Periph_USART1)
+	if (USARTx == USART3)
 	{
-		RCC_APB1PeriphClockCmd(uart->uart_rcc, ENABLE);
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO, ENABLE);
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+		GPIO_Init(GPIOB, &GPIO_InitStructure);
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+		GPIO_Init(GPIOB, &GPIO_InitStructure);
 	}
-	else
+	else if (USARTx == USART2)
 	{
-		RCC_APB2PeriphClockCmd(uart->uart_rcc, ENABLE);
-	}
-
-	USART_DeInit(uart->uartx);
-	USART_InitTypeStructure.USART_BaudRate = uart->baud;
-	USART_InitTypeStructure.USART_StopBits = uart->stop;
-	USART_InitTypeStructure.USART_Parity = uart->parity;
-	USART_InitTypeStructure.USART_WordLength = USART_WordLength_8b;
-	USART_InitTypeStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-	USART_InitTypeStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-	/* 中断优先级配置 */
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);             // 中断优先级使用NVIC_PriorityGroup_2，2bit pre; 2bit sub
-	NVIC_InitTypeStructure.NVIC_IRQChannel = uart->IRQChannel;
-	NVIC_InitTypeStructure.NVIC_IRQChannelPreemptionPriority = 2;
-	NVIC_InitTypeStructure.NVIC_IRQChannelSubPriority = uart->subPriority;
-	NVIC_InitTypeStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitTypeStructure);
-	USART_ITConfig(uart->uartx, USART_IT_RXNE, ENABLE);     // 使能串口接收中断
-	USART_Init(uart->uartx, &USART_InitTypeStructure);
-	USART_Cmd(uart->uartx, ENABLE);                         //使能串口
-}
-
-
-void uart_send_char(uart_t *uart, u8 value)
-{
-	USART_SendData(uart->uartx, (u16)value);
-
-	while (USART_GetFlagStatus(uart->uartx, USART_FLAG_TC) == RESET);
-}
-
-void uart_send_string(uart_t *uart, u8 *value)
-{
-	while (*value != '\0')
-	{
-		uart_send_char(uart, *value);
-		value++;
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+		GPIO_Init(GPIOA, &GPIO_InitStructure);
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+		GPIO_Init(GPIOA, &GPIO_InitStructure);
+		/* esp8266 CH_PD */
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOG, ENABLE);
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+		GPIO_Init(GPIOG, &GPIO_InitStructure);
 	}
 }
-
-void uart_send_array(uart_t *uart, u8 *value, u16 length)
+static void uart_init(USART_TypeDef *USARTx)
 {
-	u16 i = 0;
+	USART_InitTypeDef USART_InitStructure;
 
-	for (i = 0; i < length; i++)
+	if (USARTx == USART3)
 	{
-		uart_send_char(uart, value[i]);
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
+	}
+	else if (USARTx == USART2)
+	{
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+	}
+
+	USART_InitStructure.USART_BaudRate = 115200;
+	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+	USART_InitStructure.USART_Parity = USART_Parity_No;
+	USART_InitStructure.USART_StopBits = USART_StopBits_1;
+	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	USART_ITConfig(USARTx, USART_IT_RXNE, ENABLE);
+	USART_Init(USARTx, &USART_InitStructure);
+	USART_Cmd(USARTx, ENABLE);
+}
+
+static void NVIC_USART_init(USART_TypeDef *USARTx)
+{
+	NVIC_InitTypeDef NVIC_InitStructure;
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
+
+	if (USARTx == USART3)
+	{
+		NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
+		NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+		NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+		NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	}
+	else if (USARTx == USART2)
+	{
+		NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+		NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+		NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+		NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	}
+
+	NVIC_Init(&NVIC_InitStructure);
+}
+
+void UART_config(USART_TypeDef *USARTx)
+{
+	uart_gpio_init(USARTx);
+	NVIC_USART_init(USARTx);
+	uart_init(USARTx);
+}
+
+void USART_SendChar(USART_TypeDef *USARTx, u8 c)
+{
+	USART_SendData(USARTx, c);
+
+	while (USART_GetFlagStatus(USARTx, USART_FLAG_TXE) == RESET);
+}
+
+#if 0
+char putchar(char c)
+{
+	USART_SendChar(USART3, c);
+	return c;
+}
+#endif
+void USART_SendStr(USART_TypeDef *USARTx, u8 *str)
+{
+	USART_ClearFlag(USARTx, USART_FLAG_TC);
+
+	while (0 != *str)
+	{
+		USART_SendChar(USARTx, *str);
+		str++;
 	}
 }
 
-int fputc(int ch, FILE *f)
-{
-	while (USART_GetFlagStatus(USART3, USART_FLAG_TC) == RESET)
-	{}
-
-	USART_SendData(USART3, (u8) ch);
-	return ch;
-}
 

@@ -24,59 +24,30 @@ queue_t uart3_queue =
 
 
 
-uart_t uart2 =
-{
-	.baud        = 115200,
-	.stop        = USART_StopBits_1,
-	.parity      = USART_Parity_No,
-	.gpiorx      = GPIOA,
-	.gpiotx      = GPIOA,
-	.pin_rcc     = RCC_APB2Periph_GPIOA,
-	.uart_rcc    = RCC_APB1Periph_USART2,
-	.uartx       = USART2,
-	.uart_queue  = &uart2_queue,
-	.pin_rx      = GPIO_Pin_3,
-	.pin_tx      = GPIO_Pin_2,
-	.IRQChannel  = USART2_IRQn,
-	.subPriority = 1,
-};
-uart_t uart3 =
-{
-	.baud        = 115200,
-	.stop        = USART_StopBits_1,
-	.parity      = USART_Parity_No,
-	.gpiorx      = GPIOB,
-	.gpiotx      = GPIOB,
-	.pin_rcc     = RCC_APB2Periph_GPIOB,
-	.uart_rcc    = RCC_APB1Periph_USART3,
-	.uartx       = USART3,
-	.uart_queue  = &uart3_queue,
-	.pin_rx      = GPIO_Pin_11,
-	.pin_tx      = GPIO_Pin_10,
-	.IRQChannel  = USART3_IRQn,
-	.subPriority = 2,
-};
 
 
 void init_esp8266(void)
 {
-	init_uart(&uart2);
-	init_uart(&uart3);
+	UART_config(USART3);
+	UART_config(USART2);
+	GPIO_SetBits(GPIOG, GPIO_Pin_7);
+//    GPIO_ResetBits(GPIOG, GPIO_Pin_7);
 }
 
 void esp8266_handle(void)
 {
 	u8 temp = 0;
 
-	while (queue_is_empty(uart3.uart_queue) != 1)
+	while (!queue_is_empty(&uart3_queue))
 	{
-		temp = queue_get(uart3.uart_queue);
-		uart_send_char(&uart2, temp);
+		temp = queue_get(&uart3_queue);
+		USART_SendChar(USART2, temp);
+		USART_SendChar(USART3, temp);
 	}
 
-	while (queue_is_empty(uart2.uart_queue) != 1)
+	while (!queue_is_empty(&uart2_queue))
 	{
-		temp = queue_get(uart2.uart_queue);
-		uart_send_char(&uart3, temp);
+		temp = queue_get(&uart2_queue);
+		USART_SendChar(USART3, temp);
 	}
 }
