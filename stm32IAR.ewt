@@ -206,6 +206,12 @@
       </file>
     </group>
     <group>
+      <name>motor</name>
+      <file>
+        <name>$PROJ_DIR$\Driver\motor\motor.c</name>
+      </file>
+    </group>
+    <group>
       <name>uart</name>
       <file>
         <name>$PROJ_DIR$\Driver\uart\uart.c</name>

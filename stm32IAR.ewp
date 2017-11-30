@@ -310,6 +310,7 @@
           <state>$PROJ_DIR$\common\</state>
           <state>$PROJ_DIR$\Driver\uart\</state>
           <state>$PROJ_DIR$\Driver\esp8266\</state>
+          <state>$PROJ_DIR$\Driver\motor\</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1931,6 +1932,12 @@
       <name>LED</name>
       <file>
         <name>$PROJ_DIR$\Driver\led\led.c</name>
+      </file>
+    </group>
+    <group>
+      <name>motor</name>
+      <file>
+        <name>$PROJ_DIR$\Driver\motor\motor.c</name>
       </file>
     </group>
     <group>
