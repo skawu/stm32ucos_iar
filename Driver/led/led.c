@@ -98,7 +98,6 @@ void LED_GPIO_set(unsigned char gpio_num, unsigned char value)
 				{ GPIO_ResetBits(GPIOC, GPIO_Pin_7); }
 			}
 			break;
-
 //		case 8:
 //			{
 //				if (value)

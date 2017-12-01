@@ -212,6 +212,15 @@
       </file>
     </group>
     <group>
+      <name>mpu6050</name>
+      <file>
+        <name>$PROJ_DIR$\Driver\mpu6050\i2c.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Driver\mpu6050\mpu6050.c</name>
+      </file>
+    </group>
+    <group>
       <name>uart</name>
       <file>
         <name>$PROJ_DIR$\Driver\uart\uart.c</name>

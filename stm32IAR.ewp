@@ -311,6 +311,7 @@
           <state>$PROJ_DIR$\Driver\uart\</state>
           <state>$PROJ_DIR$\Driver\esp8266\</state>
           <state>$PROJ_DIR$\Driver\motor\</state>
+          <state>$PROJ_DIR$\Driver\mpu6050\</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1938,6 +1939,15 @@
       <name>motor</name>
       <file>
         <name>$PROJ_DIR$\Driver\motor\motor.c</name>
+      </file>
+    </group>
+    <group>
+      <name>mpu6050</name>
+      <file>
+        <name>$PROJ_DIR$\Driver\mpu6050\i2c.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Driver\mpu6050\mpu6050.c</name>
       </file>
     </group>
     <group>

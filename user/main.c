@@ -5,6 +5,7 @@
 #include "led.h"
 #include "esp8266.h"
 #include "motor.h"
+#include "mpu6050.h"
 
 char usart_data_main[] = "skawu\n";
 
@@ -34,6 +35,8 @@ void peri_init(void)
 //	LED_gpio_init();
 	init_esp8266();
 	motor_init();
+
+    mpu6050_init();
 }
 
 
@@ -101,7 +104,6 @@ int main(void)
 //	OSTaskCreate(Task_buz, (void *)0, &Task_led_STK2[OS_TASK_LED_STK_SIZE - 1], 2);
 	OSTaskCreate(Task_esp8266, (void *)0, &Task_esp8266_STK[OS_TASK_STAT_STK_SIZE - 1], 4);
 	OSTaskCreate(Task_motor, (void *)0, &Task_motor_STK[OS_TASK_LED_STK_SIZE - 1], 2);
-
 	OSStart();
 	return 0;
 }
