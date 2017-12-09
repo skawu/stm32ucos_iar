@@ -1,4 +1,5 @@
 #include "mpu6050.h"
+#include "uart.h"
 
 
 /*
@@ -7,7 +8,18 @@
 
 void mpu6050_init(void)
 {
-    I2C_Start();
-    I2C_send_byte((unsigned char) MPU6050_ADDR_W);
-    I2C_Stop();
+	unsigned char mac = 0;
+	I2C_GPIO_Init();
+	I2C_init();
+	mac = I2C_read(I2C1, (unsigned char)WHO_AM_I);
+
+	if (!mac)
+	{
+		USART_SendStr(USART3, "error\r\n");
+		return ;
+	}
+	else
+	{
+		USART_SendChar(USART3, mac);
+	}
 }

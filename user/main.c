@@ -35,8 +35,7 @@ void peri_init(void)
 //	LED_gpio_init();
 	init_esp8266();
 	motor_init();
-
-    mpu6050_init();
+	mpu6050_init();
 }
 
 
